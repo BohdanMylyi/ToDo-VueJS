@@ -1,6 +1,6 @@
 <template>
 	<q-card>
-		<modal-header>Add Task</modal-header>
+		<modal-header>Edit Task</modal-header>
 
 		<form @submit.prevent="submitForm">
 			<q-card-section class="q-pt-none">
@@ -35,24 +35,24 @@ import mixinAddEditTask from 'src/mixins/mixin-add-edit-task'
 
 export default {
 	mixins: [mixinAddEditTask],
+	props: ['task', 'id'],
 	data() {
 		return {
-			taskToSubmit: {
-				name: '',
-				dueDate: '',
-				dueTime: '',
-				completed: false
-			}
+			taskToSubmit: {}
 		}
 	},
 	methods: {
-		...mapActions('tasks', ['addTask']),
-
+		...mapActions('tasks', ['updateTask']),
 		submitTask() {
-			this.addTask(this.taskToSubmit)
+			this.updateTask({
+				id: this.id,
+				updates: this.taskToSubmit
+			})
 			this.$emit('close')
-		},
-
+		}
+	},
+	created() {
+		this.taskToSubmit = Object.assign({}, this.task)
 	}
 }
 </script>

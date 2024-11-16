@@ -1,3 +1,4 @@
+
 const routes = [
   {
     path: '/',
@@ -10,6 +11,14 @@ const routes = [
       {
         path: '/settings',
         component: () => import('pages/PageSettings.vue')
+      },
+      {
+        path: '/settings/help',
+        component: () => import('pages/PageHelp.vue')
+      },
+      {
+        path: '/auth',
+        component: () => import('pages/PageAuth.vue')
       }
     ]
   },
