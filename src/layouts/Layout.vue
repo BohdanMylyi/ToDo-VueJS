@@ -7,9 +7,19 @@
         </q-toolbar-title>
 
         <q-btn
+        v-if="!loggedIn"
           to="/auth"
           icon-right="account_circle"
           label="Login"
+          class="absolute-right"
+          flat
+        />
+
+        <q-btn
+        v-else
+        @click="logoutUser"
+          icon-right="account_circle"
+          label="Logout"
           class="absolute-right"
           flat
         />
@@ -60,7 +70,7 @@
             <q-item-label>{{ nav.label }}</q-item-label>
           </q-item-section>
         </q-item>
-        
+
       </q-list>
     </q-drawer>
 
@@ -71,6 +81,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'MainLayout',
   data () {
@@ -89,6 +101,12 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
+  methods: {
+    ...mapActions('auth', ['logoutUser'])
   }
 }
 </script>
