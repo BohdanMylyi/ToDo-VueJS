@@ -6,7 +6,7 @@
   "author": "Bohdan Mylyi <mylyibohdan18@gmail.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0",
+    "icons": "icongenie generate -i src/logo/logo.png --skip-trim",
     "dev": "quasar dev",
     "build": "quasar build"
   },

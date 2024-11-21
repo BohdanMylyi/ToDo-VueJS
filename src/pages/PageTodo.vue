@@ -1,6 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md absolute full-width full-height column">
+      <template v-if="tasksDownloaded">
       <div class="row q-mb-lg">
         <search />
         <sort />
@@ -13,13 +14,13 @@
           v-if="!Object.keys(tasksTodo).length && !search && !settings.showTasksInOneList"
         >
         </no-tasks>
-    
-        <tasks-todo 
+
+        <tasks-todo
           v-if="Object.keys(tasksTodo).length"
           :tasksTodo="tasksTodo"
         />
-    
-        <tasks-completed 
+
+        <tasks-completed
           v-if="Object.keys(tasksCompleted).length"
           :tasksCompleted="tasksCompleted"
           class="q-mb-xl"
@@ -36,6 +37,17 @@
           icon="add"
         />
       </div>
+    </template>
+
+    <template v-else>
+      <div class="absolute-center">
+        <q-spinner-hourglass
+          color="primary"
+          size="2em"
+        />
+        <q-tooltip :offset="[0, 8]">QSpinnerHourglass</q-tooltip>
+      </div>
+    </template>
     </div>
 
     <q-dialog v-model="showAddTask">
@@ -52,11 +64,11 @@ export default {
     return {
       showAddTask: false
     }
-  }, 
+  },
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
     ...mapGetters('settings', ['settings']),
-    ...mapState('tasks', ['search'])
+    ...mapState('tasks', ['search', 'tasksDownloaded'])
   },
   mounted() {
     this.$root.$on('showAddTask', () => {
